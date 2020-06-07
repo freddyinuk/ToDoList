@@ -10,6 +10,7 @@ var items = ["Buy Food", "Cook Food", "Eater Food"];
 app.set('view engine', 'ejs'); // setting up the ejs template, set up the viewengine to later renders the template
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('public'));
 
 app.get("/", function(req, res) {
 
