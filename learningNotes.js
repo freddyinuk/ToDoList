@@ -497,6 +497,117 @@ Layouts
 
 
 
+                        289. Understanding Node Module Exports: How to Pass Functions and Data between Files
+
+//creating our own modules just like the node modules(
+const express = require('express');
+//)
+
+//note this is all node and can be found in the node docs
+//to do this, create a new js file like day.js. This is going to be our module
+//we take the javascript logic that was 'creating' our date out of the app.js
+//file as this doesn't really belong there in the midst of all the get.() post.()
+//and so on.
+//Then we copy and past it into the new file day.js which is our own module
+//We create a new function containing the whole thing and add a return statment:
+
+function getDate(){
+
+let today = new Date();
+
+let options = {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric"
+};
+
+let day = today.toLocaleDateString("en-US", options);
+return day;
+};
+
+// at the moment the module is not exporting the js object as we haven't specified it
+//in order to see what's going on add a console log on the top of our module
+
+console.log(module);
+
+//to use it in app.js we have to require it just like the others but because it's
+//not installed with npm, you'll have to specified the path of the current folder
+
+const day = require(__dirname + "/day.js");
+
+//this will be returned in the terminal:
+
+id: '/Users/freddy/projects/todolist-v1/day.js',
+path: '/Users/freddy/projects/todolist-v1',
+exports: {},
+
+// you can see that there isn't an export specified
+
+//in oder to export use the following on the top of your module:
+
+module.exports = getDate;//where getDate is the function but not executed
+
+//so you export getDate
+//in the app.js file:
+//then it gets bound to the word day specified earlier when required the module
+//then bind the function and execte to the varible day like so:
+
+let day = day();
+
+//now when the day is called later it executes the module day.js (function)
+
+//in order to use more than just one function, we have to add another method on the module.exports like so:
+module.exports.getDate = getDate; //here
+
+function getDate(){
+
+let today = new Date();
+
+let options = {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric"
+};
+
+let day = today.toLocaleDateString("en-US", options);
+return day;
+};
+
+
+
+module.exports.getDay = getDay;//and here
+
+function getDay(){
+
+let today = new Date();
+
+let options = {
+  weekday: "long",
+};
+
+let day = today.toLocaleDateString("en-US", options);
+return day;
+};
+
+//then in your app.js you'd need to change the call of the function with the specific method like so:
+
+app.get("/", function(req, res) {
+
+  let day = date.getDay();//instead of just = date();
+
+  res.render('list', {
+    titleList: day,
+    newListItems: items
+  });
+
+
+
+
+
+
+
 
 
 
