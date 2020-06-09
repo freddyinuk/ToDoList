@@ -4,8 +4,8 @@ const date = require(__dirname + "/day.js");
 
 const app = express();
 
-let items = ["Buy Food", "Cook Food", "Eater Food"];
-let workItems = [];
+const items = ["Buy Food", "Cook Food", "Eater Food"];
+const workItems = [];
 
 app.set('view engine', 'ejs'); // setting up the ejs template, set up the viewengine to later renders the template
 
@@ -25,8 +25,6 @@ app.get("/", function(req, res) {
 });
 
 app.post('/', function(req, res) {
-
-  console.log(req.body);
   if (req.body.list === 'Work') {
     let item = req.body.newItem;
     workItems.push(item);
@@ -36,7 +34,6 @@ app.post('/', function(req, res) {
     items.push(item);
     res.redirect('/');
   }
-
 });
 
 app.get('/work', function(req, res) {
@@ -50,8 +47,6 @@ app.get('/about', function(req, res) {
   res.render('about');
 });
 
-
-
 app.listen(3000, function() {
-  console.log("I'm up and running on port 3000. You're the best!")
+  console.log("I'm up and running on port 3000.")
 });
